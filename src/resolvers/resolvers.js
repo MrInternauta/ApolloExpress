@@ -1,11 +1,19 @@
-const Task = require('./models/Task');
+const Task = require('../models/Task');
 const resolvers = {
+  //Tipos customizados
   Query: {
     hello: () => 'Hello world!',
     getAllTasks: async () => await Task.find(),
     getTask: async (_, { id }) => {
       return await Task.findById(id || '');
-    }
+    },
+    countTasks: async () => await Task.count()
+
+  },
+
+  Task: {
+    done: (parent) => parent.done === true,
+    otro: (parent) => "Holaa"
   },
 
   Mutation: {
