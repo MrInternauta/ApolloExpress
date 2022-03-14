@@ -13,6 +13,7 @@ type Task {
 type User {
   id: ID!
   name: String!
+  lastName: String!
   email: String!
   password: String!
   phone: String
@@ -26,6 +27,7 @@ input TaskInput {
 }
 input UserInput {
   name: String
+  lastName: String
   email: String
   password: String
   phone: String

@@ -1,4 +1,5 @@
 const Task = require('../models/Task');
+const User = require('../models/User');
 const resolvers = {
   //Tipos customizados
   Query: {
@@ -7,8 +8,10 @@ const resolvers = {
     getTask: async (_, { id }) => {
       return await Task.findById(id || '');
     },
-    countTasks: async () => await Task.count()
-
+    countTasks: async () => await Task.count(),
+    //User queries
+    getAllUsers: async () => await User.find(),
+    getUser: async (_, { id }) => await User.findById(id || '')
   },
 
   Task: {
@@ -33,6 +36,23 @@ const resolvers = {
       if (!task) return null;
       await task.remove();
       return task;
+    },
+
+    //User mutations
+    createUser: async (_, { user }) => {
+      const newUser = new User(user);
+      await newUser.save();
+      return newUser;
+    },
+    updateUser: async (_, { id, user }) => {
+      const userNew = await User.findByIdAndUpdate(id, { $set: user }, { new: true });
+      return userNew;
+    },
+    deleteUser: async (_, { id }) => {
+      const user = await User.findById(id || '');
+      if (!user) return null;
+      await user.remove();
+      return user;
     }
   }
 
