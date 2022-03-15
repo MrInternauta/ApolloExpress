@@ -1,8 +1,8 @@
-const express = require('express');
-const { ApolloServer } = require('apollo-server-express');
-const { typeDefs } = require('./typeDefs');
-const { resolvers } = require('./resolvers');
-const { ConnectDB } = require('./db');
+import express from 'express')
+import { ApolloServer } from 'apollo-server-express';
+import { typeDefs } from './models/typeDefs';
+import { resolvers } from './resolvers/resolvers';
+import { ConnectDB } from './db';
 
 const app = express();
 ConnectDB();
