@@ -2,7 +2,7 @@ import { connect } from 'mongoose';
 
 async function ConnectDB() {
   try {
-    await connect('mongodb://localhost/ApolloServer');
+    return await connect('mongodb://localhost/ApolloServer');
     console.log('DB connected');
   } catch (error) {
     console.error(error);
@@ -10,4 +10,4 @@ async function ConnectDB() {
 
 }
 
-module.exports = { ConnectDB }
+export default ConnectDB;

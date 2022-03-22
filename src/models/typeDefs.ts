@@ -1,60 +1,113 @@
-const { gql } = require('apollo-server-express');
+import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
+scalar Date
+scalar Upload
+
 #DB Types
-type Task {
-  id: ID!
-  title: String!
-  description: String,
-  done: Boolean,
-  otro: String
+type Like {
+  follower: ID!
+  followed: ID!
+  isActive: Boolean
+  lastChange: Date
 }
+
+type Match {
+  userA: ID!
+  userB: ID!
+  isActive: Boolean
+  lastChange: Date
+}
+
+type File {
+  filename: String!
+  mimetype: String!
+  encoding: String!
+}
+
+type Image {
+  path: String!
+  description: String
+  user: ID!
+  lastChange: Date
+}
+
 
 type User {
   id: ID!
   name: String!
-  lastName: String!
+  lastName: String
   email: String!
   password: String!
-  phone: String
-  image: String
+  phone: String!
+  bio: String
+  lastChange: Date
+  images: [Image]
+  youLiked: [User]
+  matched: [Match]
 }
 
+
 #Query Types Custom
-input TaskInput {
-  title: String
+input LikeInput {
+  follower: ID!
+  followed: ID!
+  isActive: Boolean
+}
+
+input MatchInput {
+  userA: ID!
+  userB: ID!
+  isActive: Boolean
+}
+
+input ImageInput {
+  file: Upload!
+  user: ID!
   description: String
 }
+
+
 input UserInput {
   name: String
   lastName: String
+  bio: String
   email: String
   password: String
   phone: String
-  image: String
 }
 
 type Query {
-  hello: String,
-  #Task queries
-  getAllTasks: [Task]
-  getTask(id: ID!): Task
-  countTasks: Int!
-  #User queries
-  getUser(id: ID!): User
-  getAllUsers: [User]
+  getUser(userId: ID!): User
+  countLikes(userId: ID!): Int
+  countMatches(userId: ID!): Int
+  getImages(userId: ID!): [Image]
+  getNewLikes(userId: ID!, perPage: Int, page: Int): [Like]
+  getMatches(userId: ID!, perPage: Int, page: Int): [Match]
+  getLikes(userId: ID!, perPage: Int, page: Int): [Like]
 }
 
 type Mutation {
-  #Task mutations
-  createTask(task: TaskInput!): Task
-  updateTask(id:ID!, task: TaskInput!): Task
-  deleteTask(id: ID!): Task
   #User mutations
   createUser(user: UserInput!): User
-  updateUser(id: ID!, user: UserInput!): User
-  deleteUser(id: ID!): User
+  updateUser(userId: ID!, user: UserInput!): User
+  deleteUser(userId: ID!): User
+
+  #Image mutations
+  deleteImage(imageId: ID!): Image
+  updateImage(image: ImageInput!): Image
+
+  #Like mutations
+  createLike(like: LikeInput!): Like
+  updateLike(likeId: ID!, like: LikeInput!): Like
+  deleteLike(likeId: ID!): Like
+
+  #Match mutations
+  createMatch(match: MatchInput!): Match
+  updateMatch(matchId: ID!, match: MatchInput!): Match
+  deleteMatch(matchId: ID!): Match
 }
 `;
 
-module.exports = { typeDefs };
+export default typeDefs;
+

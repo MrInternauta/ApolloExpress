@@ -7,8 +7,9 @@ const userScheema = new Schema({
   },
   lastName: {
     type: String,
-    required: true,
-    unique: true
+  },
+  bio: {
+    type: String
   },
   email: {
     type: String,
@@ -19,8 +20,24 @@ const userScheema = new Schema({
     type: String,
     required: true
   },
-  image: String,
-  phone: String
+  phone: {
+    type: String,
+    requered: true
+  },
+  images: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Image'
+  }],
+  youLiked: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Like'
+  }],
+  matched: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Match'
+  }],
+  isActive: Boolean,
+  lastChange: Schema.Types.Date,
 });
 
-module.exports = model('User', userScheema);
+export default model('User', userScheema);
