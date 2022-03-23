@@ -9,6 +9,7 @@ type Like {
   follower: ID!
   followed: ID!
   isActive: Boolean
+  isCheked: Boolean
   lastChange: Date
 }
 
@@ -16,6 +17,7 @@ type Match {
   userA: ID!
   userB: ID!
   isActive: Boolean
+  isCheked: Boolean
   lastChange: Date
 }
 
@@ -53,12 +55,14 @@ input LikeInput {
   follower: ID!
   followed: ID!
   isActive: Boolean
+  isCheked: Boolean
 }
 
 input MatchInput {
   userA: ID!
   userB: ID!
   isActive: Boolean
+  isCheked: Boolean
 }
 
 input ImageInput {
@@ -83,6 +87,7 @@ type Query {
   countMatches(userId: ID!): Int
   getImages(userId: ID!): [Image]
   getNewLikes(userId: ID!, perPage: Int, page: Int): [Like]
+  getNewMatches(userId: ID!, perPage: Int, page: Int): [Match]
   getMatches(userId: ID!, perPage: Int, page: Int): [Match]
   getLikes(userId: ID!, perPage: Int, page: Int): [Like]
 }

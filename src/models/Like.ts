@@ -10,6 +10,7 @@ const likeScheema = new Schema({
     ref: 'User'
   },
   isActive: Boolean,
+  isCheked: Boolean,
   lastChange: Schema.Types.Date
 });
 

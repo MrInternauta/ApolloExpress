@@ -1,4 +1,8 @@
 import User from '../models/User';
+import Like from '../models/Like';
+import Match from '../models/Match';
+import Image from '../models/Image';
+
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
 
@@ -15,22 +19,46 @@ const dateScalar = new GraphQLScalarType({
 export const resolvers = {
   //Tipos customizados
   Query: {
-    // getAllTasks: async () => await Task.find(),
-    // getTask: async (_: any, task: { id: string }) => {
-    //   return await Task.findById(task.id);
-    // },
-    // countTasks: async () => await Task.count(),
-    // //User queries
-    // getAllUsers: async () => await User.find(),
-    // getUser: async (_: any, user: { id: string }) => await User.findById(user.id)
+    // getUser(userId: ID!): User
+    getUser: async (_: any, {userId = ''}) => await User.findById(userId),
+    // countLikes(userId: ID!): Int
+    countLikes: async (_: any, {userId = ''}) => await Like.countDocuments({ followed: userId}),
+    // countMatches(userId: ID!): Int
+    countMatches: async (_: any, {userId = ''}) => await Match.countDocuments({ $or: [{ userA: userId}, { userB: userId}]}),
+    // getImages(userId: ID!): [Image]
+    getImages: async (_: any, {userId = ''}) => await Image.find({user: userId}),
+    // getNewLikes(userId: ID!, perPage: Int, page: Int): [Like]
+    getNewLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId, $and: [{ isCheked: false }] }),
+    
+    getNewMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId, $and: [{ isCheked: false }] }),
+    // getMatches(userId: ID!, perPage: Int, page: Int): [Match]
+    getMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await Match.find({ user: userId }),
+    // getLikes(userId: ID!, perPage: Int, page: Int): [Like]
+    getLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId })
   },
-
-  // Task: {
-  //   done: (parent: { done: boolean }) => parent.done === true,
-  //   otro: (parent: any) => "Holaa"
-  // },
-
+  
   Mutation: {
+
+    // #User mutations
+    // createUser(user: UserInput!): User
+    // updateUser(userId: ID!, user: UserInput!): User
+    // deleteUser(userId: ID!): User
+  
+    // #Image mutations
+    // deleteImage(imageId: ID!): Image
+    // updateImage(image: ImageInput!): Image
+  
+    // #Like mutations
+    // createLike(like: LikeInput!): Like
+    // updateLike(likeId: ID!, like: LikeInput!): Like
+    // deleteLike(likeId: ID!): Like
+  
+    // #Match mutations
+    // createMatch(match: MatchInput!): Match
+    // updateMatch(matchId: ID!, match: MatchInput!): Match
+    // deleteMatch(matchId: ID!): Match
+
+
     // createTask: async (_: any, task: { title: string, description: string }) => {
     //   const newTask = new Task({ title: task.title, description: task.description });
     //   await newTask.save();
