@@ -1,8 +1,9 @@
 import express from 'express';
 import { ApolloServer, } from 'apollo-server-express';
-import { typeDefs } from './typesDef';
-import resolvers from './resolvers/resolvers';
+import { TypeDefs } from './typesDefs';
+import { Resolvers } from './resolvers';
 import ConnectDB from './db/db';
+import routes from './routes';
 import {
   graphqlUploadExpress, // A Koa implementation is also exported.
 } from 'graphql-upload';
@@ -13,8 +14,8 @@ ConnectDB();
 async function start() {
 
   let serverApollo = new ApolloServer({
-    typeDefs,
-    resolvers
+    typeDefs: TypeDefs,
+    resolvers: Resolvers
   });
 
   await serverApollo.start();
@@ -23,14 +24,7 @@ async function start() {
 
   serverApollo.applyMiddleware({ app });
 
-  app.get('/', (req, res) => {
-    res.send('Hello world!');
-  })
-
-  app.use('*', (req, res) => {
-    res.status(404).send('Not Found!');
-  })
-
+  app.use(routes);
 
   app.listen(3000, () => {
     console.log('🚀 Server ready at 3000');

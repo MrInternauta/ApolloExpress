@@ -1,7 +1,7 @@
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
 
-import { imageModel, likeModel, matchModel, userModel } from '../dtos';
+import { imageModel, likeModel, matchModel, userModel } from '../models';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -13,7 +13,7 @@ const dateScalar = new GraphQLScalarType({
     return value.getTime(); // value sent to the client
   }
 });
-export const resolvers = {
+export const Resolvers = {
   //Tipos customizados
   Query: {
     // getUser(userId: ID!): userModel
@@ -99,8 +99,5 @@ export const resolvers = {
   }, 
 
   Date: dateScalar,
-  Upload: GraphQLUpload,
-
+  Upload: GraphQLUpload
 }
-
-export default resolvers;
