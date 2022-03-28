@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server-express';
 
-const typeDefs = gql`
+export const typeDefs = gql`
 scalar Date
 scalar Upload
 
@@ -113,6 +113,4 @@ type Mutation {
   deleteMatch(matchId: ID!): Match
 }
 `;
-
-export default typeDefs;
 

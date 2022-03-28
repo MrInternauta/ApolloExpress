@@ -14,4 +14,4 @@ const likeScheema = new Schema({
   lastChange: Schema.Types.Date
 });
 
-export default model('Like', likeScheema);
+export const likeModel = model('Like', likeScheema);

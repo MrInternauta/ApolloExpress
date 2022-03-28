@@ -1,10 +1,7 @@
-import User from '../models/User';
-import Like from '../models/Like';
-import Match from '../models/Match';
-import Image from '../models/Image';
-
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
+
+import { imageModel, likeModel, matchModel, userModel } from '../dtos';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -19,44 +16,50 @@ const dateScalar = new GraphQLScalarType({
 export const resolvers = {
   //Tipos customizados
   Query: {
-    // getUser(userId: ID!): User
-    getUser: async (_: any, {userId = ''}) => await User.findById(userId),
+    // getUser(userId: ID!): userModel
+    getUser: async (_: any, {userId = ''}) => await userModel.findById(userId),
+
     // countLikes(userId: ID!): Int
-    countLikes: async (_: any, {userId = ''}) => await Like.countDocuments({ followed: userId}),
+    countLikes: async (_: any, {userId = ''}) => await likeModel.countDocuments({ followed: userId}),
+
     // countMatches(userId: ID!): Int
-    countMatches: async (_: any, {userId = ''}) => await Match.countDocuments({ $or: [{ userA: userId}, { userB: userId}]}),
+    countMatches: async (_: any, {userId = ''}) => await matchModel.countDocuments({ $or: [{ userA: userId}, { userB: userId}]}),
+
     // getImages(userId: ID!): [Image]
-    getImages: async (_: any, {userId = ''}) => await Image.find({user: userId}),
-    // getNewLikes(userId: ID!, perPage: Int, page: Int): [Like]
-    getNewLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId, $and: [{ isCheked: false }] }),
+    getImages: async (_: any, {userId = ''}) => await userModel.find({user: userId}),
+
+    // getNewLikes(userId: ID!, perPage: Int, page: Int): [likeModel]
+    getNewLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await likeModel.find({ user: userId, $and: [{ isCheked: false }] }),
     
-    getNewMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId, $and: [{ isCheked: false }] }),
-    // getMatches(userId: ID!, perPage: Int, page: Int): [Match]
-    getMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await Match.find({ user: userId }),
-    // getLikes(userId: ID!, perPage: Int, page: Int): [Like]
-    getLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await Like.find({ user: userId })
+    getNewMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await likeModel.find({ user: userId, $and: [{ isCheked: false }] }),
+
+    // getMatches(userId: ID!, perPage: Int, page: Int): [matchModel]
+    getMatches: async (_: any, {userId = '', perPage = 10, page = 1}) => await matchModel.find({ user: userId }),
+    
+    // getLikes(userId: ID!, perPage: Int, page: Int): [likeModel]
+    getLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await likeModel.find({ user: userId })
   },
   
   Mutation: {
 
-    // #User mutations
-    // createUser(user: UserInput!): User
-    // updateUser(userId: ID!, user: UserInput!): User
-    // deleteUser(userId: ID!): User
+    // #userModel mutations
+    // createUser(user: UserInput!): userModel
+    // updateUser(userId: ID!, user: UserInput!): userModel
+    // deleteUser(userId: ID!): userModel
   
     // #Image mutations
     // deleteImage(imageId: ID!): Image
     // updateImage(image: ImageInput!): Image
   
-    // #Like mutations
-    // createLike(like: LikeInput!): Like
-    // updateLike(likeId: ID!, like: LikeInput!): Like
-    // deleteLike(likeId: ID!): Like
+    // #likeModel mutations
+    // createLike(like: LikeInput!): likeModel
+    // updateLike(likeId: ID!, like: LikeInput!): likeModel
+    // deleteLike(likeId: ID!): likeModel
   
-    // #Match mutations
-    // createMatch(match: MatchInput!): Match
-    // updateMatch(matchId: ID!, match: MatchInput!): Match
-    // deleteMatch(matchId: ID!): Match
+    // #matchModel mutations
+    // createMatch(match: MatchInput!): matchModel
+    // updateMatch(matchId: ID!, match: MatchInput!): matchModel
+    // deleteMatch(matchId: ID!): matchModel
 
 
     // createTask: async (_: any, task: { title: string, description: string }) => {
@@ -77,18 +80,18 @@ export const resolvers = {
     //   return taskDB;
     // },
 
-    // //User mutations
+    // //userModel mutations
     // createUser: async (_: any, createUser: { user: any }) => {
-    //   const newUser = new User(createUser);
+    //   const newUser = new userModel(createUser);
     //   await newUser.save();
     //   return newUser;
     // },
     // updateUser: async (_: any, updateUser: { id: string, user: any }) => {
-    //   const userNew = await User.findByIdAndUpdate(updateUser.id, { $set: updateUser.user }, { new: true });
+    //   const userNew = await userModel.findByIdAndUpdate(updateUser.id, { $set: updateUser.user }, { new: true });
     //   return userNew;
     // },
     // deleteUser: async (_: any, user: { id: string }) => {
-    //   const userDB = await User.findById(user.id);
+    //   const userDB = await userModel.findById(user.id);
     //   if (!userDB) return null;
     //   await userDB.remove();
     //   return userDB;

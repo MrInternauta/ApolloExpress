@@ -1,5 +1,5 @@
 import { Schema, model } from 'mongoose';
-const userScheema = new Schema({
+const userSchema = new Schema({
   name: {
     type: String,
     required: true,
@@ -37,7 +37,7 @@ const userScheema = new Schema({
     ref: 'Match'
   }],
   isActive: Boolean,
-  lastChange: Schema.Types.Date,
+  lastChange: Schema.Types.Date
 });
 
-export default model('User', userScheema);
+export const userModel = model('User', userSchema); 

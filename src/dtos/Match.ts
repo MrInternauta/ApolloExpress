@@ -14,4 +14,4 @@ const matchScheema = new Schema({
   lastChange: Schema.Types.Date
 });
 
-export default model('Match', matchScheema);
+export const matchModel = model('Match', matchScheema);

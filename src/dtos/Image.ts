@@ -10,8 +10,7 @@ const imageScheema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  lastChange: Schema.Types.Date,
-
+  lastChange: Schema.Types.Date
 });
 
-export default model('Image', imageScheema);
+export const imageModel = model('Image', imageScheema); 

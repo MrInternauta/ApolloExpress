@@ -1,6 +1,6 @@
 import express from 'express';
 import { ApolloServer, } from 'apollo-server-express';
-import typeDefs from './models/typeDefs';
+import { typeDefs } from './typesDef';
 import resolvers from './resolvers/resolvers';
 import ConnectDB from './db/db';
 import {
