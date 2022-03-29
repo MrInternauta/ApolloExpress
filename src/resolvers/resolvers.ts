@@ -1,7 +1,9 @@
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
+import { createUser, login } from '../controllers';
+import { hashPassword } from '../helpers';
 
-import { imageModel, likeModel, matchModel, userModel } from '../models';
+import { imageModel, IUser, likeModel, matchModel, UserModel } from '../models';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
@@ -17,7 +19,7 @@ export const Resolvers = {
   //Tipos customizados
   Query: {
     // getUser(userId: ID!): userModel
-    getUser: async (_: any, {userId = ''}) => await userModel.findById(userId),
+    getUser: async (_: any, { userId = '' }) => await UserModel.findById(userId),
 
     // countLikes(userId: ID!): Int
     countLikes: async (_: any, {userId = ''}) => await likeModel.countDocuments({ followed: userId}),
@@ -26,7 +28,7 @@ export const Resolvers = {
     countMatches: async (_: any, {userId = ''}) => await matchModel.countDocuments({ $or: [{ userA: userId}, { userB: userId}]}),
 
     // getImages(userId: ID!): [Image]
-    getImages: async (_: any, {userId = ''}) => await userModel.find({user: userId}),
+    getImages: async (_: any, { userId = '' }) => await UserModel.find({ user: userId }),
 
     // getNewLikes(userId: ID!, perPage: Int, page: Int): [likeModel]
     getNewLikes: async (_: any, {userId = '', perPage = 10, page = 1}) => await likeModel.find({ user: userId, $and: [{ isCheked: false }] }),
@@ -41,21 +43,22 @@ export const Resolvers = {
   },
   
   Mutation: {
-
+    //Login
+    login,
     // #userModel mutations
-    // createUser(user: UserInput!): userModel
+    createUser,
     // updateUser(userId: ID!, user: UserInput!): userModel
     // deleteUser(userId: ID!): userModel
-  
+
     // #Image mutations
     // deleteImage(imageId: ID!): Image
     // updateImage(image: ImageInput!): Image
-  
+
     // #likeModel mutations
     // createLike(like: LikeInput!): likeModel
     // updateLike(likeId: ID!, like: LikeInput!): likeModel
     // deleteLike(likeId: ID!): likeModel
-  
+
     // #matchModel mutations
     // createMatch(match: MatchInput!): matchModel
     // updateMatch(matchId: ID!, match: MatchInput!): matchModel
@@ -96,6 +99,7 @@ export const Resolvers = {
     //   await userDB.remove();
     //   return userDB;
     // }
+
   }, 
 
   Date: dateScalar,

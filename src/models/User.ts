@@ -37,7 +37,22 @@ const userSchema = new Schema({
     ref: 'Match'
   }],
   isActive: Boolean,
-  lastChange: Schema.Types.Date
+  lastChange: {
+    type: Schema.Types.Date,
+    default: Date.now()
+  }
 });
 
-export const userModel = model('User', userSchema); 
+
+export interface IUser {
+  name: string,
+  lastName?: string,
+  bio?: string,
+  email: string,
+  password: string,
+  phone: string,
+  isActive?: boolean,
+  lastChange?: Date
+}
+
+export const UserModel = model('User', userSchema); 

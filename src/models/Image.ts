@@ -10,7 +10,17 @@ const imageScheema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  lastChange: Schema.Types.Date
+  lastChange: {
+    type: Schema.Types.Date,
+    default: Date.now()
+  }
 });
+
+export interface IImage {
+  path: string,
+  user?: string,
+  description?: string,
+  lastChange?: Date
+}
 
 export const imageModel = model('Image', imageScheema); 

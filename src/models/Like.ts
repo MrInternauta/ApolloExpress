@@ -11,7 +11,17 @@ const likeScheema = new Schema({
   },
   isActive: Boolean,
   isCheked: Boolean,
-  lastChange: Schema.Types.Date
+  lastChange: {
+    type: Schema.Types.Date,
+    default: Date.now()
+  }
 });
 
+export interface ILike {
+  followed: string,
+  follower: string,
+  isActive: boolean,
+  isCheked: boolean,
+  lastChange?: Date
+}
 export const likeModel = model('Like', likeScheema);

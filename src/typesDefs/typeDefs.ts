@@ -81,6 +81,15 @@ input UserInput {
   phone: String
 }
 
+input LoginInput {
+  email: String
+  password: String
+}
+
+input LoginOutput {
+  token: String
+}
+
 type Query {
   getUser(userId: ID!): User
   countLikes(userId: ID!): Int
@@ -111,6 +120,9 @@ type Mutation {
   createMatch(match: MatchInput!): Match
   updateMatch(matchId: ID!, match: MatchInput!): Match
   deleteMatch(matchId: ID!): Match
+
+  #Login
+  login(login: LoginInput!): LoginOutput
 }
 `;
 
