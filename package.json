@@ -30,6 +30,7 @@
     "express": "^4.17.3",
     "graphql": "^16.3.0",
     "graphql-upload": "^13.0.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.4"
   },
   "devDependencies": {
@@ -41,6 +42,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/node-fetch": "^2.6.1",
+    "jest": "^27.5.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.7.0",
     "tslint": "^5.12.1",

@@ -1,9 +1,9 @@
 import { GraphQLScalarType } from 'graphql';
 import { GraphQLUpload } from 'graphql-upload';
 import { createUser, login } from '../controllers';
-import { hashPassword } from '../helpers';
-
-import { imageModel, IUser, likeModel, matchModel, UserModel } from '../models';
+import likeModel from '../schemas/Like';
+import matchModel from '../schemas/Match';
+import UserModel from '../schemas/User';
 
 const dateScalar = new GraphQLScalarType({
   name: 'Date',
