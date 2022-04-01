@@ -18,7 +18,8 @@
     "compileDev": "tsc -w",
     "compileProd": "tsc",
     "start": "node ./dist/Index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -39,6 +40,7 @@
     "@types/express": "^4.17.13",
     "@types/graphql-iso-date": "^3.4.0",
     "@types/graphql-upload": "^8.0.11",
+    "@types/jest": "^27.4.1",
     "@types/jsonwebtoken": "^8.5.8",
     "@types/mongoose": "^5.11.97",
     "@types/node-fetch": "^2.6.1",
