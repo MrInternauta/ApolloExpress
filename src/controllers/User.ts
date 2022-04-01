@@ -1,6 +1,6 @@
 import { hashPassword } from "../helpers";
-import { IUser, UserModel } from "../models";
-
+import { IUser } from "../models";
+import UserModel from '../schemas/User';
 export const createUser = async (_: any, user: IUser) => {
   try {
     const newUser = new UserModel({
