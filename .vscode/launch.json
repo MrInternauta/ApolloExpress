@@ -11,6 +11,17 @@
         "run-script",
         "dev"
       ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Test Program",
+      "program": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run-script",
+        "test"
+      ]
     }
   ]
 }

@@ -86,7 +86,7 @@ input LoginInput {
   password: String
 }
 
-input LoginOutput {
+type LoginOutput {
   token: String
 }
 
